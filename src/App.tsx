@@ -14,12 +14,30 @@ import NotFound from "./pages/NotFound";
 // Patient Pages
 import PatientDashboard from "./pages/patient/PatientDashboard";
 import KickCounter from "./pages/patient/KickCounter";
+import SymptomsPage from "./pages/patient/SymptomsPage";
+import LabTestsPage from "./pages/patient/LabTestsPage";
+import ChatPage from "./pages/patient/ChatPage";
+import HospitalsPage from "./pages/patient/HospitalsPage";
+import SettingsPage from "./pages/patient/SettingsPage";
 
 // Doctor Pages
 import DoctorDashboard from "./pages/doctor/DoctorDashboard";
+import PatientsListPage from "./pages/doctor/PatientsListPage";
+import PatientDetailPage from "./pages/doctor/PatientDetailPage";
+import AlertsPage from "./pages/doctor/AlertsPage";
+import LabOrdersPage from "./pages/doctor/LabOrdersPage";
+import DoctorChatPage from "./pages/doctor/DoctorChatPage";
+import AnalyticsPage from "./pages/doctor/AnalyticsPage";
+import DoctorSettingsPage from "./pages/doctor/DoctorSettingsPage";
 
 // Admin Pages
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import ManageDoctorsPage from "./pages/admin/ManageDoctorsPage";
+import ManageHospitalsPage from "./pages/admin/ManageHospitalsPage";
+import LabCategoriesPage from "./pages/admin/LabCategoriesPage";
+import ReportsPage from "./pages/admin/ReportsPage";
+import AIConfigPage from "./pages/admin/AIConfigPage";
+import AdminSettingsPage from "./pages/admin/AdminSettingsPage";
 
 const queryClient = new QueryClient();
 
@@ -40,7 +58,6 @@ function ProtectedRoute({ children, allowedRoles }: { children: React.ReactNode;
   }
 
   if (allowedRoles && profile && !allowedRoles.includes(profile.role)) {
-    // Redirect to appropriate dashboard based on role
     switch (profile.role) {
       case 'patient':
         return <Navigate to="/patient/dashboard" replace />;
@@ -64,68 +81,35 @@ function AppRoutes() {
       <Route path="/auth" element={<Auth />} />
 
       {/* Patient Routes */}
-      <Route
-        path="/patient/dashboard"
-        element={
-          <ProtectedRoute allowedRoles={['patient']}>
-            <PatientDashboard />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/patient/fmc"
-        element={
-          <ProtectedRoute allowedRoles={['patient']}>
-            <KickCounter />
-          </ProtectedRoute>
-        }
-      />
-      {/* Placeholder routes for patient */}
-      <Route path="/patient/symptoms" element={<ProtectedRoute allowedRoles={['patient']}><PatientDashboard /></ProtectedRoute>} />
-      <Route path="/patient/lab-tests" element={<ProtectedRoute allowedRoles={['patient']}><PatientDashboard /></ProtectedRoute>} />
-      <Route path="/patient/chat" element={<ProtectedRoute allowedRoles={['patient']}><PatientDashboard /></ProtectedRoute>} />
-      <Route path="/patient/hospitals" element={<ProtectedRoute allowedRoles={['patient']}><PatientDashboard /></ProtectedRoute>} />
-      <Route path="/patient/settings" element={<ProtectedRoute allowedRoles={['patient']}><PatientDashboard /></ProtectedRoute>} />
+      <Route path="/patient/dashboard" element={<ProtectedRoute allowedRoles={['patient']}><PatientDashboard /></ProtectedRoute>} />
+      <Route path="/patient/fmc" element={<ProtectedRoute allowedRoles={['patient']}><KickCounter /></ProtectedRoute>} />
+      <Route path="/patient/symptoms" element={<ProtectedRoute allowedRoles={['patient']}><SymptomsPage /></ProtectedRoute>} />
+      <Route path="/patient/lab-tests" element={<ProtectedRoute allowedRoles={['patient']}><LabTestsPage /></ProtectedRoute>} />
+      <Route path="/patient/chat" element={<ProtectedRoute allowedRoles={['patient']}><ChatPage /></ProtectedRoute>} />
+      <Route path="/patient/hospitals" element={<ProtectedRoute allowedRoles={['patient']}><HospitalsPage /></ProtectedRoute>} />
+      <Route path="/patient/settings" element={<ProtectedRoute allowedRoles={['patient']}><SettingsPage /></ProtectedRoute>} />
 
       {/* Doctor Routes */}
-      <Route
-        path="/doctor/dashboard"
-        element={
-          <ProtectedRoute allowedRoles={['doctor']}>
-            <DoctorDashboard />
-          </ProtectedRoute>
-        }
-      />
-      {/* Placeholder routes for doctor */}
-      <Route path="/doctor/patients" element={<ProtectedRoute allowedRoles={['doctor']}><DoctorDashboard /></ProtectedRoute>} />
-      <Route path="/doctor/patients/:id" element={<ProtectedRoute allowedRoles={['doctor']}><DoctorDashboard /></ProtectedRoute>} />
-      <Route path="/doctor/alerts" element={<ProtectedRoute allowedRoles={['doctor']}><DoctorDashboard /></ProtectedRoute>} />
-      <Route path="/doctor/lab-orders" element={<ProtectedRoute allowedRoles={['doctor']}><DoctorDashboard /></ProtectedRoute>} />
-      <Route path="/doctor/chat" element={<ProtectedRoute allowedRoles={['doctor']}><DoctorDashboard /></ProtectedRoute>} />
-      <Route path="/doctor/analytics" element={<ProtectedRoute allowedRoles={['doctor']}><DoctorDashboard /></ProtectedRoute>} />
-      <Route path="/doctor/settings" element={<ProtectedRoute allowedRoles={['doctor']}><DoctorDashboard /></ProtectedRoute>} />
+      <Route path="/doctor/dashboard" element={<ProtectedRoute allowedRoles={['doctor']}><DoctorDashboard /></ProtectedRoute>} />
+      <Route path="/doctor/patients" element={<ProtectedRoute allowedRoles={['doctor']}><PatientsListPage /></ProtectedRoute>} />
+      <Route path="/doctor/patients/:id" element={<ProtectedRoute allowedRoles={['doctor']}><PatientDetailPage /></ProtectedRoute>} />
+      <Route path="/doctor/alerts" element={<ProtectedRoute allowedRoles={['doctor']}><AlertsPage /></ProtectedRoute>} />
+      <Route path="/doctor/lab-orders" element={<ProtectedRoute allowedRoles={['doctor']}><LabOrdersPage /></ProtectedRoute>} />
+      <Route path="/doctor/chat" element={<ProtectedRoute allowedRoles={['doctor']}><DoctorChatPage /></ProtectedRoute>} />
+      <Route path="/doctor/analytics" element={<ProtectedRoute allowedRoles={['doctor']}><AnalyticsPage /></ProtectedRoute>} />
+      <Route path="/doctor/settings" element={<ProtectedRoute allowedRoles={['doctor']}><DoctorSettingsPage /></ProtectedRoute>} />
 
       {/* Admin Routes */}
-      <Route
-        path="/admin/dashboard"
-        element={
-          <ProtectedRoute allowedRoles={['admin']}>
-            <AdminDashboard />
-          </ProtectedRoute>
-        }
-      />
-      {/* Placeholder routes for admin */}
-      <Route path="/admin/doctors" element={<ProtectedRoute allowedRoles={['admin']}><AdminDashboard /></ProtectedRoute>} />
-      <Route path="/admin/hospitals" element={<ProtectedRoute allowedRoles={['admin']}><AdminDashboard /></ProtectedRoute>} />
-      <Route path="/admin/lab-categories" element={<ProtectedRoute allowedRoles={['admin']}><AdminDashboard /></ProtectedRoute>} />
-      <Route path="/admin/reports" element={<ProtectedRoute allowedRoles={['admin']}><AdminDashboard /></ProtectedRoute>} />
-      <Route path="/admin/ai-config" element={<ProtectedRoute allowedRoles={['admin']}><AdminDashboard /></ProtectedRoute>} />
-      <Route path="/admin/settings" element={<ProtectedRoute allowedRoles={['admin']}><AdminDashboard /></ProtectedRoute>} />
+      <Route path="/admin/dashboard" element={<ProtectedRoute allowedRoles={['admin']}><AdminDashboard /></ProtectedRoute>} />
+      <Route path="/admin/doctors" element={<ProtectedRoute allowedRoles={['admin']}><ManageDoctorsPage /></ProtectedRoute>} />
+      <Route path="/admin/hospitals" element={<ProtectedRoute allowedRoles={['admin']}><ManageHospitalsPage /></ProtectedRoute>} />
+      <Route path="/admin/lab-categories" element={<ProtectedRoute allowedRoles={['admin']}><LabCategoriesPage /></ProtectedRoute>} />
+      <Route path="/admin/reports" element={<ProtectedRoute allowedRoles={['admin']}><ReportsPage /></ProtectedRoute>} />
+      <Route path="/admin/ai-config" element={<ProtectedRoute allowedRoles={['admin']}><AIConfigPage /></ProtectedRoute>} />
+      <Route path="/admin/settings" element={<ProtectedRoute allowedRoles={['admin']}><AdminSettingsPage /></ProtectedRoute>} />
 
-      {/* Fallback redirect for /dashboard */}
+      {/* Fallback */}
       <Route path="/dashboard" element={<Navigate to="/" replace />} />
-
-      {/* 404 */}
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
